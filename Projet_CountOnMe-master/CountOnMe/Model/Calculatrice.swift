@@ -7,3 +7,14 @@
 //
 
 import Foundation
+import UIKit
+
+
+protocol CalcDelegate: AnyObject {
+    func showAlert(_ alert: UIAlertController)
+}
+
+class Calculatrice  {
+
+    
+}
