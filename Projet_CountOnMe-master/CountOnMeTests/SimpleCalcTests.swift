@@ -24,7 +24,7 @@ class SimpleCalcTests: XCTestCase {
     }
 
     // Check if "IsExpressionCorrect" is filled until Operator
-    func testGivenIsExpressionCorrect_WhenExpressionTappedIsNotCorrect_ThenExpressionReturnFalse() {
+    func testGivenIsNotExpressionCorrect_WhenExpressionTappedIsNotCorrect_ThenExpressionReturnFalse() {
         calculator.add(number: "1")
         calculator.add(operation: "+")
         calculator.calculate()
@@ -54,17 +54,44 @@ class SimpleCalcTests: XCTestCase {
         XCTAssertTrue(calculator.canAddOperator)
     }
 
+    // Check if priority operation is respected. (*)
+    func testGivenOrderOfOperations_WhenExpressionsContainsPlusAndMultiply_ThenMultiplicationIsPriority() {
+        calculator.calculString = "3 + 3 x 3"
+        calculator.calculate()
+
+        XCTAssert(calculator.calculString == "3 + 3 x 3 = 12.0")
+    }
+
+    // Check if priority operation is respected. (/)
+    func testGivenOrderOfOperations_WhenExpressionsContainsPlusAndDivide_ThenMultiplicationIsPriority() {
+        calculator.calculString = "4 + 4 / 2"
+        calculator.calculate()
+
+        XCTAssert(calculator.calculString == "4 + 4 / 2 = 6.0")
+    }
+
+    func testGivenSimple_Operation_WhenCalculate_ThenGiveresult() {
+        calculator.calculString = "2 + 3"
+        calculator.calculate()
+
+        XCTAssert(calculator.calculString == "2 + 3 = 5.0")
+    }
+    
+    func testGivenExpressionHasTwoElements_WhenCheckingExpressionHasEnoughElements_ThenFalse() {
+        calculator.calculString = "2 + "
+        XCTAssertFalse(calculator.expressionHaveEnoughElement)
+    }
+
     // Check if priority operation is respected. (* & /) ???
     func testGivenOrderOfOperations_WhenElementsContainSomething_ThenElementsFollowsOrderOfOperations() {
-//        calculator.add(number: "1")
-//        calculator.add(operation: "-")
-//        calculator.add(number: "2")
-//        calculator.add(operation: "x")
-//        calculator.add(number: "8")
-//        calculator.add(operation: "/")
-//        calculator.add(number: "2")
-//        calculator.calculate()
-
+        calculator.add(number: "1")
+        calculator.add(operation: "-")
+        calculator.add(number: "2")
+        calculator.add(operation: "x")
+        calculator.add(number: "8")
+        calculator.add(operation: "/")
+        calculator.add(number: "2")
+        calculator.calculate()
         XCTAssert(true)
     }
 }

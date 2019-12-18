@@ -50,7 +50,6 @@ class Calculator  {
         calculString.append(number)
     }
 
-    
     func add(operation: String) {
         if canAddOperator {
             switch operation {
@@ -93,9 +92,7 @@ class Calculator  {
                 operation[priorityOperatorIndex] = "\(result)"
                 operation.remove(at: priorityOperatorIndex + 1)
                 operation.remove(at: priorityOperatorIndex - 1)
-            }
-
-            else {
+            } else {
                 let firstIndexOfOperator = operation.firstIndex(where: {calcOperators.contains($0)})
                 if let operatorIndex = firstIndexOfOperator {
                     let calculOperator = operation[operatorIndex]
@@ -120,11 +117,13 @@ class Calculator  {
 
     func calculate() {
         guard expressionIsCorrect else {
-            NotificationCenter.default.post(name: Notification.Name("error"), object: nil)
+            let dic = ["message": "Expression is not correct"]
+            NotificationCenter.default.post(name: Notification.Name("error"), object: nil, userInfo: dic)
             return
         }
         guard expressionHaveEnoughElement else {
-            NotificationCenter.default.post(name: Notification.Name("error"), object: nil)
+            let dic = ["message": "Expression has not enough elements"]
+            NotificationCenter.default.post(name: Notification.Name("error"), object: nil, userInfo: dic)
             return
         }
         orderOfOperations()

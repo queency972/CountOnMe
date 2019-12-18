@@ -18,6 +18,7 @@ class ViewController: UIViewController {
     // View Life cycles
     override func viewDidLoad() {
         super.viewDidLoad()
+        textView.text = "0"
         NotificationCenter.default.addObserver(self, selector: #selector(updateScreen), name: Notification.Name("updateScreen"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(errorManager), name: Notification.Name("error"), object: nil)
     }
@@ -38,7 +39,7 @@ class ViewController: UIViewController {
         calculator.add(operation: "-")
     }
 
-
+    
     @IBAction func tappedMultiplicationButton(_ sender: UIButton) {
         calculator.add(operation: "x")
     }
@@ -56,12 +57,13 @@ class ViewController: UIViewController {
         textView.text = calculator.calculString
     }
 
-    @objc func errorManager() {
-        sendAlert()
+    @objc func errorManager(notification: NSNotification) {
+        let message = notification.userInfo!["message"]
+        sendAlert(message: message as! String)
     }
 
-    private func sendAlert() {
-        let alertVC = UIAlertController(title: "Zéro!", message: "Un operateur est déja mis !", preferredStyle: .alert)
+    private func sendAlert(message: String) {
+        let alertVC = UIAlertController(title: "Zéro!", message: message, preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
         self.present(alertVC, animated: true, completion: nil)
     }
