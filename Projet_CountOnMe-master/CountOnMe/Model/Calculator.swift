@@ -21,7 +21,7 @@ class Calculator  {
     var elements: [String] {
         return calculString.split(separator: " ").map { "\($0)" }
     }
-
+    
     // Return bool to check if expression is correct
     var expressionIsCorrect: Bool {
         return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "/"
@@ -34,7 +34,7 @@ class Calculator  {
 
     // Return bool to check if we can add an operator
     var canAddOperator: Bool {
-        return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "/"
+        return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "/" && elements.count > 0
     }
 
     // Return expression which has a result and different of nil
@@ -63,10 +63,13 @@ class Calculator  {
             case "/":
                 calculString.append(" / ")
             default:
-                NotificationCenter.default.post(name: Notification.Name("error"), object: nil)
+                let dic = ["message": "You need to have a correct operator"]
+                NotificationCenter.default.post(name: Notification.Name("error"), object: nil, userInfo: dic)
             }
         } else {
-            NotificationCenter.default.post(name: Notification.Name("error"), object: nil)
+            // NotificationCenter.default.post(name: Notification.Name("error"), object: nil)
+            let dic = ["message": "You need to have a number before add an operator"]
+            NotificationCenter.default.post(name: Notification.Name("error"), object: nil, userInfo: dic)
         }
     }
 

@@ -12,10 +12,10 @@ import UIKit
 class ViewController: UIViewController {
     @IBOutlet weak var textView: UITextView!
     @IBOutlet var numberButtons: [UIButton]!
-
+    
     // Instance of Calculator Class
     var calculator = Calculator()
-
+    
     // View Life cycles
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +23,7 @@ class ViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(updateScreen), name: Notification.Name("updateScreen"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(errorManager), name: Notification.Name("error"), object: nil)
     }
-
+    
     // View actions
     @IBAction func tappedNumberButton(_ sender: UIButton) {
         guard let numberText = sender.title(for: .normal) else {
@@ -35,12 +35,12 @@ class ViewController: UIViewController {
     @IBAction func tappedAdditionButton(_ sender: UIButton) {
         calculator.add(operation: "+")
     }
-
+    
     // Setup Action Button -
     @IBAction func tappedSubstractionButton(_ sender: UIButton) {
         calculator.add(operation: "-")
     }
-
+    
     // Setup Action Button x
     @IBAction func tappedMultiplicationButton(_ sender: UIButton) {
         calculator.add(operation: "x")
@@ -50,23 +50,37 @@ class ViewController: UIViewController {
     @IBAction func tappedDivisionButton(_ sender: UIButton) {
         calculator.add(operation: "/")
     }
-
+    
     // Setup Button =
     @IBAction func tappedEqualButton(_ sender: UIButton) {
         calculator.calculate()
     }
-
+    
+    
+    @IBAction func tappedACButton(_ sender: UIButton) {
+        didPressAC()
+    }
+    
+    func didPressAC() {
+        calculator.calculString = ""
+    }
+    
     // Function allows to update Screen via NotificationCenter.default.addObserver
     @objc func updateScreen() {
         textView.text = calculator.calculString
     }
-
+    
     // Function allows to error manage via NotificationCenter.default.addObserver
     @objc func errorManager(notification: NSNotification) {
-        let message = notification.userInfo!["message"]
-        sendAlert(message: message as! String)
+        var message = "An error occured"
+        if let userInfo = notification.userInfo {
+            if let messageString = userInfo["message"] as? String {
+                message = messageString
+            }
+        }
+        sendAlert(message: message)
     }
-
+    
     private func sendAlert(message: String) {
         let alertVC = UIAlertController(title: "Zéro!", message: message, preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
