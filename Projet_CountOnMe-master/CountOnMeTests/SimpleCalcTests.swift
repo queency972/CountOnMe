@@ -79,10 +79,28 @@ class SimpleCalcTests: XCTestCase {
     
     func testGivenExpressionHasTwoElements_WhenCheckingExpressionHasEnoughElements_ThenFalse() {
         calculator.calculString = "2 + "
+
         XCTAssertFalse(calculator.expressionHaveEnoughElement)
     }
 
-    // Check if priority operation is respected. (* & /) ???
+    func testGivenExpressionHasOneElements_WhenExpressionHasNotEnoughElements_ThenFalse() {
+        calculator.add(number: "1")
+        calculator.calculate()
+        
+        XCTAssertFalse(calculator.expressionHaveEnoughElement)
+    }
+
+    func testGivenHasResult_WhenAddNewExpression_ThenAddExpressionIsTrue() {
+        calculator.add(number: "1")
+        calculator.add(operation: "+")
+        calculator.add(number: "1")
+        calculator.calculate()
+        calculator.add(number: "1")
+
+        XCTAssertTrue(calculator.calculString == "1")
+    }
+
+    // Check if priority operation is respected. (* & /)
     func testGivenOrderOfOperations_WhenElementsContainSomething_ThenElementsFollowsOrderOfOperations() {
         calculator.add(number: "1")
         calculator.add(operation: "-")
@@ -93,5 +111,6 @@ class SimpleCalcTests: XCTestCase {
         calculator.add(number: "2")
         calculator.calculate()
         XCTAssert(true)
+        XCTAssert(calculator.calculString == "1 - 2 x 8 / 2 = -7.0")
     }
 }

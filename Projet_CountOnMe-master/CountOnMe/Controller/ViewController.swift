@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var textView: UITextView!
     @IBOutlet var numberButtons: [UIButton]!
 
+    // Instance of Calculator Class
     var calculator = Calculator()
 
     // View Life cycles
@@ -30,33 +31,37 @@ class ViewController: UIViewController {
         }
         calculator.add(number: numberText)
     }
-
+    // Setup Action Button +
     @IBAction func tappedAdditionButton(_ sender: UIButton) {
         calculator.add(operation: "+")
     }
-    
+
+    // Setup Action Button -
     @IBAction func tappedSubstractionButton(_ sender: UIButton) {
         calculator.add(operation: "-")
     }
 
-    
+    // Setup Action Button x
     @IBAction func tappedMultiplicationButton(_ sender: UIButton) {
         calculator.add(operation: "x")
     }
     
-
+    // Setup Action Button /
     @IBAction func tappedDivisionButton(_ sender: UIButton) {
         calculator.add(operation: "/")
     }
 
+    // Setup Button =
     @IBAction func tappedEqualButton(_ sender: UIButton) {
         calculator.calculate()
     }
 
+    // Function allows to update Screen via NotificationCenter.default.addObserver
     @objc func updateScreen() {
         textView.text = calculator.calculString
     }
 
+    // Function allows to error manage via NotificationCenter.default.addObserver
     @objc func errorManager(notification: NSNotification) {
         let message = notification.userInfo!["message"]
         sendAlert(message: message as! String)

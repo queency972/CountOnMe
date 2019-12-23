@@ -8,41 +8,41 @@
 
 import Foundation
 
-//protocol CalcDelegate: AnyObject {
-//  func showAlert(_ alert: UIAlertController)
-//}
-
 class Calculator  {
 
-    var calculString = "1 + 1 = 2" {
+    // Variable allows to display String in viewLabal with a NotificationCenter.default.post
+    var calculString = "" {
         didSet {
             NotificationCenter.default.post(name: Notification.Name("updateScreen"), object: nil)
         }
     }
 
+    // Calculated property
     var elements: [String] {
         return calculString.split(separator: " ").map { "\($0)" }
     }
 
-    var operators: [String] = ["+"]
-
-    // Error check computed variables
+    // Return bool to check if expression is correct
     var expressionIsCorrect: Bool {
         return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "/"
     }
 
+    // Return bool to check if expression has enough elements to make calcul
     var expressionHaveEnoughElement: Bool {
         return elements.count >= 3
     }
 
+    // Return bool to check if we can add an operator
     var canAddOperator: Bool {
         return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "/"
     }
 
+    // Return expression which has a result and different of nil
     var expressionHaveResult: Bool {
         return calculString.firstIndex(of: "=") != nil
     }
 
+    // Check if expression has a result, if yes, calculString will be empty
     func add(number: String) {
         if expressionHaveResult {
             calculString = ""
@@ -50,6 +50,7 @@ class Calculator  {
         calculString.append(number)
     }
 
+    // Function allows to add an operator with condition (canAddOperator)
     func add(operation: String) {
         if canAddOperator {
             switch operation {
@@ -69,6 +70,7 @@ class Calculator  {
         }
     }
 
+    // Function check the order of operations
     func orderOfOperations() {
         var operation = elements
         let priorityOperators = ["x", "/"]
@@ -115,6 +117,7 @@ class Calculator  {
         calculString = calculString + " = \(operation[0])"
     }
 
+    // Function allows to get calcul if 2 conditions are correct
     func calculate() {
         guard expressionIsCorrect else {
             let dic = ["message": "Expression is not correct"]
