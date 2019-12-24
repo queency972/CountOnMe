@@ -100,6 +100,13 @@ class SimpleCalcTests: XCTestCase {
         XCTAssertTrue(calculator.calculString == "1")
     }
 
+    func testGivenExpressionHasOneAlreadyPoint_WhenAddAnotherPoint_ThenFalse() {
+        calculator.calculString = "1."
+        calculator.addPoint()
+
+        XCTAssertFalse(calculator.canAddPoint)
+    }
+
     // Check if priority operation is respected. (* & /)
     func testGivenOrderOfOperations_WhenElementsContainSomething_ThenElementsFollowsOrderOfOperations() {
         calculator.add(number: "1")

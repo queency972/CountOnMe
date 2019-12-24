@@ -55,14 +55,17 @@ class ViewController: UIViewController {
     @IBAction func tappedEqualButton(_ sender: UIButton) {
         calculator.calculate()
     }
-    
-    
+
     @IBAction func tappedACButton(_ sender: UIButton) {
         didPressAC()
     }
     
     func didPressAC() {
         calculator.calculString = ""
+    }
+
+    @IBAction func tappedPointButton(_ sender: UIButton) {
+        calculator.addPoint()
     }
     
     // Function allows to update Screen via NotificationCenter.default.addObserver
@@ -82,7 +85,7 @@ class ViewController: UIViewController {
     }
     
     private func sendAlert(message: String) {
-        let alertVC = UIAlertController(title: "Zéro!", message: message, preferredStyle: .alert)
+        let alertVC = UIAlertController(title: "Oups!", message: message, preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
         self.present(alertVC, animated: true, completion: nil)
     }

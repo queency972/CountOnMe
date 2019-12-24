@@ -27,6 +27,11 @@ class Calculator  {
         return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "/"
     }
 
+    // Return bool to check if the last index is "."
+    var canAddPoint: Bool {
+        return calculString.last != "."
+    }
+
     // Return bool to check if expression has enough elements to make calcul
     var expressionHaveEnoughElement: Bool {
         return elements.count >= 3
@@ -48,6 +53,16 @@ class Calculator  {
             calculString = ""
         }
         calculString.append(number)
+    }
+
+    func addPoint() {
+        if !canAddPoint {
+            let dic = ["message": "Expression is not correct"]
+            NotificationCenter.default.post(name: Notification.Name("error"), object: nil, userInfo: dic)
+        }
+        else {
+            calculString.append(".")
+        }
     }
 
     // Function allows to add an operator with condition (canAddOperator)
@@ -119,7 +134,7 @@ class Calculator  {
         }
         calculString = calculString + " = \(operation[0])"
     }
-
+    
     // Function allows to get calcul if 2 conditions are correct
     func calculate() {
         guard expressionIsCorrect else {
