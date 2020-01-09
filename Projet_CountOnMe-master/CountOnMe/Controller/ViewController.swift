@@ -53,7 +53,11 @@ class ViewController: UIViewController {
     
     // Setup Button =
     @IBAction func tappedEqualButton(_ sender: UIButton) {
+        if calculator.expressionHaveResult {
+            didPressAC()
+        } else {
         calculator.calculate()
+        }
     }
 
     // Setup Button AC
