@@ -55,6 +55,7 @@ class Calculator  {
         calculString.append(number)
     }
 
+    // Return bool to check if i can add a point or not.
     func addPoint() {
         if !canAddPoint {
             let dic = ["message": "Expression is not correct"]

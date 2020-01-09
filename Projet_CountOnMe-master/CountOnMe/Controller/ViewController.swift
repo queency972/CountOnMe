@@ -56,14 +56,17 @@ class ViewController: UIViewController {
         calculator.calculate()
     }
 
+    // Setup Button AC
     @IBAction func tappedACButton(_ sender: UIButton) {
         didPressAC()
     }
-    
+
+    // Function Button AC
     func didPressAC() {
         calculator.calculString = ""
     }
 
+    // Setup Button Point
     @IBAction func tappedPointButton(_ sender: UIButton) {
         calculator.addPoint()
     }
@@ -83,7 +86,8 @@ class ViewController: UIViewController {
         }
         sendAlert(message: message)
     }
-    
+
+    // Function Alert allows to send UIAlertController
     private func sendAlert(message: String) {
         let alertVC = UIAlertController(title: "Oups!", message: message, preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
